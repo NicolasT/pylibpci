@@ -265,3 +265,13 @@ cdef _list_devices():
     pci_cleanup(pacc)
 
     return result
+
+
+cdef _get_version():
+    cdef unsigned int major = (PCI_LIB_VERSION & 0xff0000) >> 16
+    cdef unsigned int minor = (PCI_LIB_VERSION & 0x00ff00) >> 8
+    cdef unsigned int micro = (PCI_LIB_VERSION & 0x0000ff)
+
+    return (major, minor, micro)
+
+__version__ = _get_version()

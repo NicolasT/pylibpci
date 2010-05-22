@@ -29,7 +29,13 @@ import pyximport
 
 pyximport.install()
 
+import pylibpci
+import pylibpci._libpci
 from pylibpci._libpci import list_devices
+
+print 'Using pylibpci version %d.%d.%d' % pylibpci.__version__
+print 'Compiled against libpci %d.%d.%d' % pylibpci._libpci.__version__
+print
 
 print '\n'.join('%s: %s %s' % (dev.device_class_name, dev.vendor_name,
     dev.device_name) for dev in list_devices())
