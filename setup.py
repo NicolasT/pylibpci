@@ -34,6 +34,8 @@ import pylibpci
 _libpci = Extension(
     'pylibpci._libpci', ['pylibpci/_libpci.pyx', ],
     libraries=['pci', ],
+    extra_compile_args=['-Wall', '-Werror', ],
+    extra_link_args=['-Wall', '-Werror', ],
 )
 
 setup(
