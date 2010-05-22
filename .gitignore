@@ -1,0 +1,4 @@
+build/
+*.pyc
+*.pyxbldc
+pylibpci/_libpci.c
