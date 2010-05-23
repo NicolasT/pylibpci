@@ -258,6 +258,11 @@ class PCIDevice(object):
 
 
 def list_devices():
+    '''List all PCI devices available on the system
+
+    :return: List of all PCI devices available on the system
+    :rtype: `iterable` of `PCIDevice`s
+    '''
     return iter(_list_devices())
 
 cdef _list_devices():
