@@ -221,6 +221,25 @@ class PCIDevice(object):
         return '%s: %s %s' % (self.device_class_name, self.vendor_name,
                 self.device_name)
 
+    def __eq__(self, other):
+        if not isinstance(other, PCIDevice):
+            return NotImplemented
+
+        for attr in 'domain', 'bus', 'dev', 'func', 'vendor_id', 'device_id', \
+            'device_class', 'irq':
+            if getattr(self, attr) != getattr(other, attr):
+                return False
+
+        return True
+
+    def __ne__(self, other):
+        eq = self.__eq__(other)
+
+        if eq is NotImplemented:
+            return NotImplemented
+
+        return not eq
+
 
 def list_devices():
     return tuple(_list_devices())
