@@ -25,3 +25,7 @@
 
 __version__ = 0, 0, 1
 __author__ = 'Nicolas Trangez  <eikke@eikke.com>'
+
+from ._libpci import list_devices, __version__ as LIBPCI_VERSION
+
+__all__ = ['__version__', '__author__', 'list_devices', 'LIBPCI_VERSION', ]
