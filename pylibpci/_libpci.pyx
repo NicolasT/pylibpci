@@ -242,7 +242,7 @@ class PCIDevice(object):
 
 
 def list_devices():
-    return tuple(_list_devices())
+    return iter(_list_devices())
 
 cdef _list_devices():
     result = []
