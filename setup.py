@@ -25,11 +25,37 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+import os
+import os.path
+
 from distutils.core import setup
 from distutils.extension import Extension
 from Cython.Distutils import build_ext
 
-import pylibpci
+# This doesn't work since the pylibpci package module imports _libpci, which
+# doesn't exist while buiding.
+# Fallback to 'manual' parsing.
+#import pylibpci
+
+def find_version():
+    fd = open(os.path.join(os.path.dirname(__file__), 'pylibpci',
+        '__init__.py'))
+
+    try:
+        for line in fd.xreadlines():
+            if not line.startswith('__version__ ='):
+                continue
+
+            version_expr = line.split('=', 1)[1].strip()
+            version = eval(version_expr)
+
+            return version
+
+    finally:
+        fd.close()
+
+    return (0, 0, 1)
+
 
 _libpci = Extension(
     'pylibpci._libpci', ['pylibpci/_libpci.pyx', ],
@@ -40,7 +66,7 @@ _libpci = Extension(
 
 setup(
     name='pylibpci',
-    version='.'.join(str(i) for i in pylibpci.__version__),
+    version='.'.join(str(i) for i in find_version()),
     description='Python bindings for libpci',
 
     author='Nicolas Trangez',
