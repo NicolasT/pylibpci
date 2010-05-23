@@ -198,24 +198,40 @@ cdef extern from "pci/pci.h":
         PCI_MAX_LAT
 
 
+import operator
+
 class PCIDevice(object):
     def __init__(self, domain, bus, dev, func, vendor_id, device_id,
             device_class, irq, interrupt_pin, base_addr,
             vendor_name, device_name, device_class_name):
-        self.domain = domain
-        self.bus = bus
-        self.dev = dev
-        self.func = func
-        self.vendor_id = vendor_id
-        self.device_id = device_id
-        self.device_class = device_class
-        self.irq = irq
-        self.interrupt_pin = interrupt_pin
-        self.base_addr = base_addr
+        self._domain = domain
+        self._bus = bus
+        self._dev = dev
+        self._func = func
+        self._vendor_id = vendor_id
+        self._device_id = device_id
+        self._device_class = device_class
+        self._irq = irq
+        self._interrupt_pin = interrupt_pin
+        self._base_addr = base_addr
 
-        self.vendor_name = vendor_name
-        self.device_name = device_name
-        self.device_class_name = device_class_name
+        self._vendor_name = vendor_name
+        self._device_name = device_name
+        self._device_class_name = device_class_name
+
+    domain = property(operator.attrgetter('_domain'))
+    bus = property(operator.attrgetter('_bus'))
+    dev = property(operator.attrgetter('_dev'))
+    func = property(operator.attrgetter('_func'))
+    vendor_id = property(operator.attrgetter('_vendor_id'))
+    device_id = property(operator.attrgetter('_device_id'))
+    irq = property(operator.attrgetter('_irq'))
+    interrupt_pin = property(operator.attrgetter('_interrupt_pin'))
+    base_addr = property(operator.attrgetter('_base_addr'))
+
+    vendor_name = property(operator.attrgetter('_vendor_name'))
+    device_name = property(operator.attrgetter('_device_name'))
+    device_class_name = property(operator.attrgetter('_device_class_name'))
 
     def __str__(self):
         return '%s: %s %s' % (self.device_class_name, self.vendor_name,
